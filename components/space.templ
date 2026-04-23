@@ -1,0 +1,34 @@
+package components
+
+type ISpaceProps struct {
+ID string;
+Name string;
+Code string;
+Content string;
+}
+
+templ Space(props ISpaceProps) {
+@Navbar()
+<div class="space-container">
+  <div class="space-info-container">
+    <div class="label">
+      <h2>{props.Name}</h2>
+    </div>
+    <div class="label-right">
+      <p>Access Code</p>
+      <h2>{props.Code}</h2>
+      <p>ID: {props.ID}</p>
+    </div>
+  </div>
+  <div class="space-content-container">
+    <textarea placeholder="Jot down your notes here!" name="content" hx-post={"/area/"+ props.ID + "/save" }
+      hx-trigger="keyup changed delay:0.5s">{props.Content}</textarea>
+    <div class="space-file-container">
+      <label class="file-upload">
+        <input type="file" name="file" hx-post="/area/upload" hx-encoding="multipart/form-data" hx-swap="none" />
+        <p>Choose a file or drag here!</p>
+      </label>
+    </div>
+  </div>
+</div>
+}

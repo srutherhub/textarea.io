@@ -1,0 +1,46 @@
+package components
+
+templ CreateSpace() {
+@Navbar()
+<div class="create-space-container">
+	<form class="create-space-form" hx-post="/area/create" hx-swap="innerHTML">
+		<h1>Create your Space</h1>
+		<details>
+			<summary>What is an Area?</summary>
+			An Area is a place to temporarily store text and files to share across your devices. It will expire after 2 weeks
+			of inactivity.
+		</details>
+		<input class="input-primary" type="text" placeholder="Name your space" name="name" />
+		<button class="button-primary">Continue</button>
+	</form>
+</div>
+}
+
+templ CreateSpaceSuccess(id,name,key,url string) {
+<div class="create-space-success-container">
+	<div class="label">
+		<p>Area</p>
+		<h1>{ name }</h1>
+		<p>ID: { id }</p>
+	</div>
+	<div class="label">
+		<p>Code</p>
+		<h1 class="copyable" id="space-key">{ key }</h1>
+	</div>
+	<div class="label">
+		<p>URL</p>
+		<h1 class="copyable" id="space-url">{ url }</h1>
+	</div>
+	<p class="warn">Save the URL and the Code! You will need it to access your Area from other devices.</p>
+	<a href={id} class="button-primary">Continue to { name }</a>
+</div>
+}
+
+templ CreateSpaceFail() {
+<div class="create-space-form">
+	<div class="label">
+		<h2>Oops!</h2>
+		<p>We couldn't create the Area. Try again.</p>
+	</div>
+</div>
+}

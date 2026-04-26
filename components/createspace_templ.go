@@ -33,7 +33,7 @@ func CreateSpace() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"create-space-container\"><form class=\"create-space-form\" hx-post=\"/area/create\" hx-swap=\"innerHTML\"><h1>Create your Space</h1><details><summary>What is an Area?</summary> An Area is a place to temporarily store text and files to share across your devices. It will expire after 2 weeks of inactivity.</details> <input class=\"input-primary\" type=\"text\" placeholder=\"Name your space\" name=\"name\"> <button class=\"button-primary\">Continue</button></form></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"create-space-container\"><form class=\"create-space-form\" hx-post=\"/area/create\" hx-swap=\"innerHTML\"><h1>Create a new Area</h1><details><summary>What is an Area?</summary> An Area is a place to temporarily store text and files to share across your devices. It will expire after 2 weeks of inactivity.</details> <input class=\"input-primary\" type=\"text\" placeholder=\"Name your area\" name=\"name\"> <button class=\"button-primary\">Continue</button></form></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

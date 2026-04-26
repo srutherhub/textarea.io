@@ -32,7 +32,15 @@ func (au *AuthService) AddToSessionToken(existing string, info SpaceInfo) (strin
 	if err != nil {
 		return au.CreateSessionToken(info)
 	}
-	tokens = append(tokens, info)
+
+	for i, token := range tokens {
+		if token.ID == info.ID {
+			tokens[i] = info
+		} else {
+			tokens = append(tokens, info)
+		}
+
+	}
 	return au.encryptTokens(tokens)
 }
 
@@ -44,18 +52,18 @@ func (au *AuthService) encryptTokens(tokens SessionToken) (string, error) {
 	return utils.Encrypt(string(data))
 }
 
-func (au *AuthService) Authenticate(id, key string) error {
+func (au *AuthService) Authenticate(id, key string) (SpaceInfo, error) {
 	if id == "" || key == "" {
-		return errors.New("missing required input: id or key")
+		return SpaceInfo{}, errors.New("missing required inputs: id, key")
 	}
 
-	err := au.query.Spaces.Authenticate(id, key)
+	areaInfo, err := au.query.Spaces.Authenticate(id, key)
 
 	if err != nil {
-		return err
+		return SpaceInfo{}, err
 	}
 
-	return nil
+	return areaInfo, nil
 }
 
 func (au *AuthService) DecryptTokens(cookie string) (SessionToken, error) {

@@ -3,12 +3,12 @@ module app
 go 1.25.1
 
 require (
+	github.com/a-h/templ v0.3.977
 	github.com/srutherhub/web-app v0.0.15
 	modernc.org/sqlite v1.48.2
 )
 
 require (
-	github.com/a-h/templ v0.3.977 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/evanw/esbuild v0.27.3 // indirect
 	github.com/google/uuid v1.6.0 // indirect

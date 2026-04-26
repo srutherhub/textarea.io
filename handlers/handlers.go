@@ -34,6 +34,7 @@ func CreateSpace(as *services.AppService, au *services.AuthService) http.Handler
 		id, key, name, err := as.CreateSpace(name)
 
 		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
 			components.CreateSpaceFail().Render(r.Context(), w)
 			return
 		}
@@ -105,9 +106,61 @@ func DeleteSpace(as *services.AppService, au *services.AuthService) http.Handler
 
 func Area(au *services.AuthService) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+
+		sessionToken := GetSessionTokenFromCookie(au, r)
+
 		indexProps := v.IndexProps{Title: "Area"}
-		page := components.Area()
+		page := components.Area(components.AreaProps{Areas: sessionToken})
 		v.Index(page, indexProps).Render(r.Context(), w)
+	}
+}
+
+func AreaAuth(au *services.AuthService) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		id := r.FormValue("id")
+		key := r.FormValue("key")
+
+		areaInfo, err := au.Authenticate(id, key)
+
+		if err != nil {
+			w.WriteHeader(http.StatusUnauthorized)
+			fmt.Fprint(w, "Unauthorized:"+err.Error())
+			return
+		}
+		AddOrCreateSessionCookie(areaInfo.Name, areaInfo.ID, areaInfo.Key, au, w, r)
+		if r.Header.Get("HX-Request") == "true" {
+			w.Header().Set("HX-Redirect", "/area/"+areaInfo.ID)
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+
+		http.Redirect(w, r, "/area/"+areaInfo.ID, http.StatusFound)
+	}
+}
+
+func GetSessionTokenFromCookie(au *services.AuthService, r *http.Request) services.SessionToken {
+	session, err := r.Cookie("session")
+	if err != nil || session.Value == "" {
+		return services.SessionToken{}
+	}
+
+	token, err := au.DecryptTokens(session.Value)
+	if err != nil {
+		return services.SessionToken{}
+	}
+
+	return token
+}
+
+func AddOrCreateSessionCookie(name string, id string, key string, au *services.AuthService, w http.ResponseWriter, r *http.Request) {
+	sessionCookie, err := r.Cookie("session")
+
+	if err != nil {
+		token, _ := au.CreateSessionToken(services.SpaceInfo{Name: name, ID: id, Key: key})
+		SetSessionCookie(w, token)
+	} else {
+		token, _ := au.AddToSessionToken(sessionCookie.Value, services.SpaceInfo{Name: name, ID: id, Key: key})
+		SetSessionCookie(w, token)
 	}
 }
 

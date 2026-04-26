@@ -15,10 +15,15 @@ templ Space(props ISpaceProps) {
       <h2>{props.Name}</h2>
     </div>
     <div class="label-right">
+      <p>Area ID</p>
+      <h3 class="copyable">{props.ID}</h3>
       <p>Access Code</p>
-      <h2>{props.Code}</h2>
-      <p>ID: {props.ID}</p>
+      <h3 class="copyable">{props.Code}</h3>
     </div>
+  </div>
+  <div class="area-actions">
+    <button class="button-warn">Forget</button>
+    <button class="button-error">Delete</button>
   </div>
   <div class="space-content-container">
     <textarea placeholder="Jot down your notes here!" name="content" hx-post={"/area/"+ props.ID + "/save" }

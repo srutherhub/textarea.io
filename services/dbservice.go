@@ -1,7 +1,9 @@
 package services
 
 import (
+	"app/utils"
 	"database/sql"
+	"errors"
 	"os"
 	"path/filepath"
 
@@ -155,14 +157,22 @@ func (sp *Spaces) UpdateLastAccessed(id string) error {
 	return nil
 }
 
-func (sp *Spaces) Authenticate(id, key string) error {
-	_, err := sp.db.Exec(`SELECT id FROM spaces WHERE id = ? AND key = ?`, id, key)
+func (sp *Spaces) Authenticate(id, key string) (SpaceInfo, error) {
+	var name, storedKey, storedId string
+
+	err := sp.db.QueryRow(`SELECT name,key,id FROM spaces WHERE id = ?`, id, key).Scan(&name, &storedKey, &storedId)
 
 	if err != nil {
-		return err
+		return SpaceInfo{}, errors.New("area does not exist")
 	}
 
-	return nil
+	decryptedKey,err:=utils.Decrypt(storedKey)
+
+	if err != nil || decryptedKey != key {
+		return SpaceInfo{},errors.New("code does not match")
+	}
+
+	return SpaceInfo{ID: storedId, Name: name, Key: decryptedKey}, nil
 }
 
 type Files struct {

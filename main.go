@@ -40,6 +40,7 @@ func InitSpaceController(app *services.AppService, auth *services.AuthService) *
 	controller.RegisterRoute(c.Route{Method: "POST", Path: "/{id}/save", Handler: m.HasAccess(auth, handlers.SaveSpace(app, auth))})
 	controller.RegisterRoute(c.Route{Method: "DELETE", Path: "/{id}/delete", Handler: m.HasAccess(auth, handlers.DeleteSpace(app, auth))})
 	controller.RegisterRoute(c.Route{Method: "GET", Path: "", Handler: handlers.Area(auth)})
+	controller.RegisterRoute(c.Route{Method: "POST", Path: "/auth", Handler: handlers.AreaAuth(auth)})
 	return controller
 }
 

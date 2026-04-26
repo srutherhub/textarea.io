@@ -20,6 +20,7 @@ func NewAppService(db *DBService) *AppService {
 func (as *AppService) CreateSpace(name string) (id string, key string, spaceName string, err error) {
 	id = as.generateSlug()
 	key = as.generateKey()
+
 	encryptedKey, err := utils.Encrypt(key)
 
 	if err != nil {

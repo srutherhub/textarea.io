@@ -1,11 +1,47 @@
 package components
 
-templ Area() {
-<div>
-  <form class="auth-form">
-    <input type="text" class="input-primary" name="id" />
-    <input type="text" class="input-primary" name="key" />
-    <button class="button-primary">Continue</button>
-  </form>
+import "app/services"
+
+type AreaProps struct {
+Areas services.SessionToken
+}
+
+templ Area(props AreaProps) {
+@Navbar()
+<div class="area-page-container">
+  <div class="label">
+    <h1>Area</h1>
+    <p>Each area has a unique ID and access code — share both to invite others.</p>
+  </div>
+  <div class="area-auth-form">
+    <form class="auth-form" hx-post="/area/auth">
+      <h2>Access an Area</h2>
+      <p>Have an ID and code? Pick up where you left off.</p>
+      <input type="text" class="input-primary" name="id" placeholder="Area ID" />
+      <input type="text" class="input-primary" name="key" placeholder="Code" />
+      <button class="button-primary">Continue</button>
+    </form>
+  </div>
+  <div class="area-visited-container">
+    <div class="label">
+      <h2>Areas visited on this device</h2>
+      <p>Areas you've previously visited on this device will appear here.</p>
+    </div>
+    for _,area := range props.Areas {
+    <a href={"/area/" + area.ID}>
+      <div class="area-visited">
+        <h4>{area.Name}</h4>
+        <p>{area.ID}</p>
+      </div>
+    </a>
+    }
+  </div>
+  <div class="area-auth-form">
+    <div class="auth-form">
+      <h2>Start a new Area</h2>
+      <p>Create a new Area here!</p>
+      <a href="/area/create" class="button-primary">Create Area</a>
+    </div>
+  </div>
 </div>
 }

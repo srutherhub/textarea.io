@@ -323,6 +323,7 @@ textarea {
   justify-content: center;
   gap: 4rem;
   margin: 0 auto;
+  padding: 2rem 0;
 }
 
 .area-visited-container {

@@ -14,13 +14,23 @@
   --border-solid: 1px solid var(--color-dark);
   --border-rad-med: 0.5rem;
   --border-error: 1px solid var(--color-error);
+  --border-error-dashed: 1px dashed var(--color-error);
   --border-warn: 1px solid var(--color-warn);
+  --border-warn-dashed: 1px dashed var(--color-warn);
 }
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+::view-transition-old(root) {
+  animation-duration: 100ms;
+}
+
+::view-transition-new(root) {
+  animation-duration: 100ms;
 }
 
 html {
@@ -151,7 +161,22 @@ textarea {
   background-color: var(--color-background);
   color: var(--color-dark);
   border: var(--border-solid);
-  cursor:pointer;
+  cursor: pointer;
+}
+
+.button-secondary {
+  font-size: 1rem;
+  padding: 0.5rem;
+  background-color: transparent;
+  border-radius: var(--border-rad-med);
+  border: none;
+  color: var(--color-dark);
+  text-align: center;
+}
+
+.button-secondary:hover {
+  background-color: var(--color-light);
+  cursor: pointer;
 }
 
 .button-error {
@@ -160,13 +185,13 @@ textarea {
   background-color: var(--color-error-bg);
   border-radius: var(--border-rad-med);
   border: var(--border-error);
-  color: var(--color-error);
+  color: var(--color-dark);
   border: var(--border-error);
   text-align: center;
 }
 
 .button-error:hover {
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .button-warn {
@@ -175,13 +200,13 @@ textarea {
   background-color: var(--color-warn-bg);
   border-radius: var(--border-rad-med);
   border: var(--border-warn);
-  color: var(--color-warn);
+  color: var(--color-dark);
   border: var(--border-warn);
   text-align: center;
 }
 
 .button-warn:hover {
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .input-primary {
@@ -193,7 +218,7 @@ textarea {
 }
 
 .warn {
-  color: var(--color-warn);
+  color: var(--color-error);
 }
 
 .copyable {
@@ -247,13 +272,20 @@ textarea {
   align-items: center;
 }
 
+.area-actions-container {
+  display: flex;
+  flex-direction: column;
+  width: min(64rem, 95%);
+  gap: 0.5rem;
+}
+
 .area-actions {
   display: flex;
   justify-content: flex-end;
   background-color: var(--color-light);
   border-radius: var(--border-rad-med);
-  padding: 0.25rem;
-  width: min(64rem, 95%);
+  padding: 0.5rem;
+  width: 100%;
   gap: 1rem;
 }
 
@@ -308,13 +340,6 @@ textarea {
   background-color: var(--color-light);
 }
 
-area-visited {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
-}
-
 .area-visited:hover {
   background-color: var(--color-background);
   cursor: pointer;
@@ -322,6 +347,40 @@ area-visited {
 
 .area-auth-form {
   margin: 0 auto;
+}
+
+.action-container:empty {
+  display: none;
+}
+
+.forget-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: var(--border-rad-med);
+  border: var(--border-warn-dashed);
+  background-color: var(--color-warn-bg);
+  color: var(--color-dark);
+  padding: 0.5rem;
+}
+
+.forget-area button {
+  font-size: 0.875rem;
+}
+
+.delete-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: var(--border-rad-med);
+  border: var(--border-error-dashed);
+  background-color: var(--color-error-bg);
+  color: var(--color-dark);
+  padding: 0.5rem;
+}
+
+.delete-area button {
+  font-size: 0.875rem;
 }
 
 @media (max-width: 768px) {

@@ -172,5 +172,6 @@ func SetSessionCookie(w http.ResponseWriter, value string) {
 		Secure:   true,
 		SameSite: http.SameSiteStrictMode,
 		Path:     "/",
+		MaxAge:   60 * 60 * 24 * 7,
 	})
 }

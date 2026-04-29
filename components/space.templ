@@ -21,9 +21,15 @@ templ Space(props ISpaceProps) {
       <h3 class="copyable">{props.Code}</h3>
     </div>
   </div>
-  <div class="area-actions">
-    <button class="button-warn">Forget</button>
-    <button class="button-error">Delete</button>
+  <div class="area-actions-container">
+    <div class="area-actions">
+      <button class="button-warn" hx-get="/ui/action/forget" hx-target="#action-container"
+        hx-swap="innerHTML">Forget</button>
+      <button class="button-error" hx-get="/ui/action/delete" hx-target="#action-container"
+        hx-swap="innerHTML">Delete</button>
+    </div>
+    <div class="action-container" id="action-container">
+    </div>
   </div>
   <div class="space-content-container">
     <textarea placeholder="Jot down your notes here!" name="content" hx-post={"/area/"+ props.ID + "/save" }
@@ -35,5 +41,27 @@ templ Space(props ISpaceProps) {
       </label>
     </div>
   </div>
+</div>
+}
+
+templ ForgetArea() {
+<div class="forget-area">
+  <p>Forget Area on this device?</p>
+  <div>
+    <button class="button-warn">Continue</button>
+    <button class="button-secondary" hx-get="/ui/clear" hx-target="#action-container" hx-swap="innerHTML">X</button>
+  </div>
+
+</div>
+}
+
+templ DeleteArea() {
+<div class="delete-area">
+  <p>Permanently delete this Area?</p>
+  <div>
+    <button class="button-error">Continue</button>
+    <button class="button-secondary" hx-get="/ui/clear" hx-target="#action-container" hx-swap="innerHTML">X</button>
+  </div>
+
 </div>
 }

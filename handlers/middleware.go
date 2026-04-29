@@ -28,3 +28,10 @@ func (m *Middleware) HasAccess(au *services.AuthService, next http.HandlerFunc) 
 		}
 	}
 }
+
+func (m *Middleware) NoCache(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Cache-Control", "no-store")
+		next(w, r)
+	}
+}

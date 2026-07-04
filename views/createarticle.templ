@@ -1,0 +1,15 @@
+package templates
+
+templ CreateArticleView() {
+@Wrapper() {
+@Navbar()
+<div class="create-article-container">
+  <form class="create-article-form" hx-post="/article/create" hx-swap="outerHTML">
+    <h3>Write. Polish. Publish.</h3>
+    <p>Create your new article, you can always change the title later.</p>
+    <div class="create-article-form-inputs">
+      <input type="text" placeholder="Title" name="article_name" autocomplete="off">
+      <button>Continue</button>
+    </div>
+  </form>
+</div> }}

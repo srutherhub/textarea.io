@@ -1,0 +1,30 @@
+package templates
+
+import (
+"fmt"
+m "textarea/models"
+)
+
+type CreateArticleSuccessProps struct {
+Id m.ArticleId
+Name m.ArticleName
+AccessCode m.ArticleAccessCode
+}
+
+templ CreateArticleSuccess(props CreateArticleSuccessProps) {
+<form class="create-article-form">
+  <div class="horizontal-label">
+    <p>Article</p>
+    <h3>{props.Name}</h3>
+  </div>
+  <div class="horizontal-label">
+    <p>Access Code</p>
+    <h2>{props.AccessCode}</h2>
+  </div>
+  <p>
+    Save this access code. You'll need it to access and edit your article.</p>
+  <div class="create-article-form-inputs">
+    <a class="link-button" href={fmt.Sprintf("/article/%d/edit", props.Id)}>Edit</a>
+  </div>
+</form>
+}

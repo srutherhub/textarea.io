@@ -32,5 +32,7 @@ func ArticleController(app *AppService) *c.Controller {
 	article.RegisterRoute(c.Route{Method: "POST", Path: "/create", Handler: CreateArticleHandler(app)})
 	article.RegisterRoute(c.Route{Method: "GET", Path: "/{id}/edit", Handler: EditArticleViewHandler(app)})
 	article.RegisterRoute(c.Route{Method: "POST", Path: "/{id}/save", Handler: SaveArticleHandler(app)})
+	article.RegisterRoute(c.Route{Method: "POST", Path: "/{id}/publish", Handler: PublishArticleHandler(app)})
+	article.RegisterRoute(c.Route{Method: "GET", Path: "/{slug}", Handler: ArticleViewHandler(app)})
 	return article
 }

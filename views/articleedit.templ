@@ -1,30 +1,42 @@
 package templates
 
 import (
-"strconv"
-"time"
-m "textarea/models")
+	"strconv"
+	m "textarea/models"
+)
 
 type ArticleEditProps struct {
-Article m.ArticleModel
+	Article m.ArticleModel
 }
 
 templ ArticleEditView(props ArticleEditProps) {
-@Wrapper() {
-@Navbar()
-<script src="https://unpkg.com/tiny-markdown-editor/dist/tiny-mde.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://unpkg.com/tiny-markdown-editor/dist/tiny-mde.min.css" />
-<div class="article-editor-container">
-  <div class="article-info">
-    <h2>{props.Article.Name}</h2>
-    <p>Last edited: {time.Time(props.Article.LastEditedAt).Format("2006-01-02 15:04:05 UTC")}</p>
-  </div>
-  <div class="txtcontainer">
-    <textarea id="txt" name="md" hx-post={"/article/" + strconv.FormatInt(int64(props.Article.Id),10) + "/save" }
-      hx-trigger="change">{props.Article.MdContent}</textarea>
-  </div>
-</div>
-<script type="text/javascript">
+	@Wrapper() {
+		@Navbar()
+		<script src="https://unpkg.com/tiny-markdown-editor/dist/tiny-mde.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://unpkg.com/tiny-markdown-editor/dist/tiny-mde.min.css"/>
+		<div class="article-editor-container">
+			<div class="article-info">
+				<h2>{ props.Article.Name }</h2>
+				<p><i>Last edited: { props.Article.LastEditedAt.Format("2006-01-02 15:04:05 UTC") }</i></p>
+				<div class="article-publish">
+					<p>Publish</p>
+					<input type="checkbox" checked?={ props.Article.IsPublished == 1 } hx-trigger="change" hx-post={ "/article/" + strconv.FormatInt(int64(props.Article.Id), 10) + "/publish" }/>
+				</div>
+				if props.Article.IsPublished == 1 {
+					<p><i>First published on: { props.Article.PublishedAt.Format("2006-01-02 15:04:05 UTC") }</i></p>
+					<p><a class="link" href={ "/article/" + *props.Article.Slug }>Go to article</a></p>
+				}
+			</div>
+			<div class="txtcontainer">
+				<textarea
+					id="txt"
+					name="md"
+					hx-post={ "/article/" + strconv.FormatInt(int64(props.Article.Id), 10) + "/save" }
+					hx-trigger="change"
+				>{ props.Article.MdContent }</textarea>
+			</div>
+		</div>
+		<script type="text/javascript">
   var tinyMDE = new TinyMDE.Editor({ textarea: "txt", placeholder: "Start writing... this editor supports Markdown. Use **bold**, *italic*, # headings, and more." });
   var saveTimer;
   tinyMDE.addEventListener("change", function () {
@@ -35,4 +47,5 @@ templ ArticleEditView(props ArticleEditProps) {
     }, 500);
   });
 </script>
-}}
+	}
+}

@@ -25,6 +25,11 @@
   animation-duration: 50ms;
 }
 
+aside {
+  font-style: italic;
+  color: var(--color-secondary);
+}
+
 html {
   background-color: var(--color-background);
   color: var(--color-dark);
@@ -61,7 +66,7 @@ input:hover {
   cursor: pointer;
 }
 
-h1,
+/* h1,
 h2,
 h3,
 h4,
@@ -70,7 +75,7 @@ h6,
 p {
   margin: 0;
   padding: 0;
-}
+} */
 
 a {
   text-decoration: none;
@@ -110,6 +115,17 @@ body {
   flex-shrink: 0;
 }
 
+.nav-container h1,
+.nav-container h2,
+.nav-container h3,
+.nav-container h4,
+.nav-container h5,
+.nav-container h6,
+.nav-container p {
+  margin: 0;
+  padding: 0;
+}
+
 .create-article-container {
   display: flex;
   justify-content: center;
@@ -141,10 +157,35 @@ body {
   padding: 2rem 0;
 }
 
+.article-viewer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 0 auto;
+  max-width: min(80ch, 95%);
+  padding: 4rem 0;
+}
+
 .article-info {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+.article-info h1,
+.article-info h2,
+.article-info h3,
+.article-info h4,
+.article-info h5,
+.article-info h6,
+.article-info p {
+  margin: 0;
+  padding: 0;
+}
+
+.article-publish {
+  display: flex;
+  gap: 0.25rem;
 }
 
 .txtcontainer {
@@ -153,6 +194,15 @@ body {
   border-top: 1px solid var(--color-dark);
 }
 
+.link {
+  text-decoration: underline;
+}
+
 .TinyMDE {
   background-color: var(--color-background) !important;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
 }

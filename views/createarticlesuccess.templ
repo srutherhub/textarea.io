@@ -2,13 +2,12 @@ package templates
 
 import (
 "fmt"
-m "textarea/models"
 )
 
 type CreateArticleSuccessProps struct {
-Id m.ArticleId
-Name m.ArticleName
-AccessCode m.ArticleAccessCode
+Id int64
+Name string
+AccessCode string
 }
 
 templ CreateArticleSuccess(props CreateArticleSuccessProps) {

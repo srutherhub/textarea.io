@@ -1,0 +1,25 @@
+package templates
+
+import m "textarea/models"
+
+type ArticleViewProps struct {
+	Article m.ArticleModel
+}
+
+templ ArticleView(props ArticleViewProps) {
+	@Wrapper() {
+		<div class="article-viewer-container">
+			<div class="article-info">
+				<h2>{ props.Article.Name }</h2>
+				<p><i>Last edited: { props.Article.LastEditedAt.Format("2006-01-02 15:04:05 UTC") }</i></p>
+				<p><i>First published on: { props.Article.PublishedAt.Format("2006-01-02 15:04:05 UTC") }</i></p>
+			</div>
+			<div>
+				@templ.Raw(props.Article.HtmlContent)
+			</div>
+		</div>
+		<div class="footer">
+			<aside>Created with <a href="/" class="link">textarea.io</a></aside>
+		</div>
+	}
+}
